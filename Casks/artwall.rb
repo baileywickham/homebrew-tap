@@ -7,6 +7,8 @@ cask "artwall" do
   desc "Menu bar app that sets art wallpapers from Artpaper packs"
   homepage "https://github.com/baileywickham/ArtWall"
 
+  auto_updates true
+
   app "ArtWall.app"
 
   zap trash: [
