@@ -1,6 +1,6 @@
 cask "beads" do
-  version "0.2.26"
-  sha256 "fd5082f536092ed3ca08a5b2e58afabfbba6898cadd2867292b4081636a70575"
+  version "0.2.27"
+  sha256 "ba419c147f38c0701d978f06831dba4bac511b6e79fedbeed715957db0d778ee"
 
   url "https://github.com/baileywickham/beads-ui/releases/download/v#{version}/Beads-#{version}-macOS.dmg"
   name "Beads"
