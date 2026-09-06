@@ -10,6 +10,7 @@ brew trust baileywickham/tap        # Homebrew requires this once for third-part
 brew install --cask artwall
 brew install --cask beads
 brew install --cask skylight
+brew install --cask apple-mcp
 ```
 
 Everything at once on a new machine:
@@ -29,6 +30,7 @@ Remove: `brew uninstall --zap <cask>`.
 | [artwall](Casks/artwall.rb) | Menu bar app that sets art wallpapers from Artpaper packs | [ArtWall](https://github.com/baileywickham/ArtWall) |
 | [beads](Casks/beads.rb) | Native macOS UI for the beads issue tracker | [beads-ui](https://github.com/baileywickham/beads-ui) |
 | [skylight](Casks/skylight.rb) | Local computer-use daemon (AX trees, screenshots, UI actuation) | [skylight](https://github.com/baileywickham/skylight) |
+| [apple-mcp](Casks/apple-mcp.rb) | MCP server for Apple Reminders, Calendar and Notes | [apple-mcp](https://github.com/baileywickham/apple-mcp) |
 
 ## How releases reach the tap
 
