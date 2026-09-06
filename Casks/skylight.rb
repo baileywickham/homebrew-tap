@@ -6,7 +6,7 @@ cask "skylight" do
 
   url "https://github.com/baileywickham/skylight/releases/download/v#{version}/SkylightService-#{version}-macOS.dmg"
   name "Skylight"
-  desc "Local computer-use daemon: AX trees, screenshots, and UI actuation for native apps"
+  desc "Local computer-use daemon: AX trees, screenshots, and UI actuation"
   homepage "https://github.com/baileywickham/skylight"
 
   depends_on macos: :sonoma

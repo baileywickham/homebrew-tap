@@ -4,7 +4,7 @@ cask "beads" do
 
   url "https://github.com/baileywickham/beads-ui/releases/download/v#{version}/Beads-#{version}-macOS.dmg"
   name "Beads"
-  desc "Native macOS UI for the beads issue tracker"
+  desc "Native UI for the beads issue tracker"
   homepage "https://github.com/baileywickham/beads-ui"
 
   auto_updates true

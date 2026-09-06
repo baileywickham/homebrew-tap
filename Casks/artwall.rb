@@ -8,12 +8,13 @@ cask "artwall" do
   homepage "https://github.com/baileywickham/ArtWall"
 
   auto_updates true
+  depends_on macos: :sonoma
 
   app "ArtWall.app"
 
   zap trash: [
-    "~/Library/LaunchAgents/com.baileywickham.ArtWall.plist",
     "~/Library/Application Support/ArtWall",
+    "~/Library/LaunchAgents/com.baileywickham.ArtWall.plist",
     "~/Library/Preferences/com.baileywickham.ArtWall.plist",
   ]
 end
