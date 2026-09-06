@@ -13,12 +13,13 @@ cask "skylight" do
 
   app "SkylightService.app"
   binary "#{appdir}/SkylightService.app/Contents/MacOS/skylight"
-  binary "#{appdir}/SkylightService.app/Contents/MacOS/skylight-run"
+  binary "#{appdir}/SkylightService.app/Contents/Resources/bin/skylight-run"
 
-  postflight do
-    # Registers the bundled LaunchAgent via SMAppService and starts the daemon.
-    system_command "#{appdir}/SkylightService.app/Contents/MacOS/skylight",
-                   args: ["register"]
+  # Registers the bundled LaunchAgent via SMAppService and starts the daemon.
+  # Idempotent; rerun by hand as `skylight register` if it ever fails here.
+  postflight_steps do
+    run "SkylightService.app/Contents/MacOS/skylight", base: :appdir, args: ["register"],
+        print_stdout: true, must_succeed: false
   end
 
   uninstall launchctl: "com.skylight.SkylightService"
