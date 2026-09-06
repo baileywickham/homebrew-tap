@@ -1,0 +1,85 @@
+# Reusable workflow: bump a cask in this tap to a just-published release.
+#
+# Called from an app repo's release workflow as a job that `needs` the release
+# job (a `release: published` trigger would NOT fire, because releases created
+# with GITHUB_TOKEN never trigger other workflows):
+#
+#   bump-cask:
+#     needs: release
+#     uses: baileywickham/homebrew-tap/.github/workflows/bump-cask.yml@main
+#     with:
+#       cask: artwall
+#       asset: ArtWall-${{ needs.release.outputs.version }}-macOS.dmg
+#     secrets: inherit   # needs TAP_DEPLOY_KEY (write deploy key on this repo)
+name: Bump cask
+
+on:
+  workflow_call:
+    inputs:
+      cask:
+        description: Cask name (file Casks/<cask>.rb)
+        required: true
+        type: string
+      asset:
+        description: Release asset filename the cask downloads
+        required: true
+        type: string
+      tag:
+        description: Release tag (defaults to the calling workflow's ref name)
+        required: false
+        type: string
+        default: ""
+    secrets:
+      TAP_DEPLOY_KEY:
+        required: true
+
+jobs:
+  bump:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Resolve release
+        id: rel
+        env:
+          TAG: ${{ inputs.tag != '' && inputs.tag || github.ref_name }}
+        run: |
+          echo "tag=$TAG"            >> "$GITHUB_OUTPUT"
+          echo "version=${TAG#v}"    >> "$GITHUB_OUTPUT"
+          echo "url=https://github.com/${{ github.repository }}/releases/download/${TAG}/${{ inputs.asset }}" >> "$GITHUB_OUTPUT"
+
+      - name: Download asset and compute sha256
+        id: hash
+        run: |
+          curl -fsSL --retry 5 --retry-all-errors -o asset "${{ steps.rel.outputs.url }}"
+          echo "sha256=$(sha256sum asset | awk '{print $1}')" >> "$GITHUB_OUTPUT"
+
+      - name: Checkout tap
+        uses: actions/checkout@v4
+        with:
+          repository: baileywickham/homebrew-tap
+          ssh-key: ${{ secrets.TAP_DEPLOY_KEY }}
+          path: tap
+
+      - name: Update cask
+        working-directory: tap
+        env:
+          CASK: Casks/${{ inputs.cask }}.rb
+          VERSION: ${{ steps.rel.outputs.version }}
+          SHA256: ${{ steps.hash.outputs.sha256 }}
+        run: |
+          test -f "$CASK" || { echo "no such cask: $CASK" >&2; exit 1; }
+          sed -i -E "s/^  version \".*\"/  version \"${VERSION}\"/" "$CASK"
+          sed -i -E "s/^  sha256 \".*\"/  sha256 \"${SHA256}\"/"    "$CASK"
+          echo "--- $CASK ---"; cat "$CASK"
+
+      - name: Commit and push
+        working-directory: tap
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if git diff --quiet; then
+            echo "No changes — ${{ inputs.cask }} already at ${{ steps.rel.outputs.version }}"
+            exit 0
+          fi
+          git add Casks
+          git commit -m "Update ${{ inputs.cask }} cask to ${{ steps.rel.outputs.version }}"
+          git push
