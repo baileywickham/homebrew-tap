@@ -6,6 +6,7 @@ Homebrew tap for [baileywickham](https://github.com/baileywickham)'s Mac apps.
 
 ```bash
 brew tap baileywickham/tap
+brew trust baileywickham/tap        # Homebrew requires this once for third-party taps
 brew install --cask artwall
 brew install --cask beads
 brew install --cask skylight
@@ -14,7 +15,7 @@ brew install --cask skylight
 Everything at once on a new machine:
 
 ```bash
-brew tap baileywickham/tap
+brew tap baileywickham/tap && brew trust baileywickham/tap
 brew bundle --file="$(brew --repo baileywickham/tap)/Brewfile"
 ```
 
