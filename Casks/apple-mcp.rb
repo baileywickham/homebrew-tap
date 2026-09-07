@@ -1,8 +1,8 @@
 # version/sha256 are rewritten by the bump-cask workflow on every apple-mcp
 # release; 0.0.0 means no release has been published yet.
 cask "apple-mcp" do
-  version "0.1.1"
-  sha256 "145c67e3d6730ed381b68d26bcf950e988e6d743e5a0c8ef6f93eff0658f634e"
+  version "0.1.2"
+  sha256 "79ce56e2d6c10fc41e8a9d2158529c5c06c83528011dafba6d6d49c0c08f5f73"
 
   url "https://github.com/baileywickham/apple-mcp/releases/download/v#{version}/AppleMCP-#{version}-macOS.dmg"
   name "Apple MCP"
