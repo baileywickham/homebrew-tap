@@ -1,8 +1,8 @@
 # version/sha256 are rewritten by the bump-cask workflow on every skylight
 # release; 0.0.0 means no release has been published yet.
 cask "skylight" do
-  version "0.3.12"
-  sha256 "acc2e146d8819350c3dd3d39ec2ab68422112b3d28d2ce890fad354a1ee5a691"
+  version "0.3.13"
+  sha256 "f6778f55205d884387acd266eb94ae8b3612668571e41ef52f41cd66a14cc82e"
 
   url "https://github.com/baileywickham/skylight/releases/download/v#{version}/SkylightService-#{version}-macOS.dmg"
   name "Skylight"
