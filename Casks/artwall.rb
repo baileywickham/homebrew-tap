@@ -1,6 +1,6 @@
 cask "artwall" do
-  version "0.2.13"
-  sha256 "6bd5d365f5585764f065e8f06095ba5e4fbffe3b830530bc3e9bc77dbe77c0c9"
+  version "0.2.14"
+  sha256 "eec4b43ef06d7c02cc88c1f49a295334e01a8234e5903691862fb3739577227d"
 
   url "https://github.com/baileywickham/ArtWall/releases/download/v#{version}/ArtWall-#{version}-macOS.dmg"
   name "ArtWall"
